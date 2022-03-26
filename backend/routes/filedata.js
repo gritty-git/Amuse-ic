@@ -5,7 +5,7 @@ router.get('/',
   async function(req, res, next) {
     if (!req.session.userId) {
       // Redirect unauthenticated requests to home page
-      res.redirect('/')
+      res.redirect('/index')
     } else {
       const params = {
         active: { drive: true }

@@ -87,15 +87,14 @@ app.use(function(req, res, next) {
 // </SessionSnippet>
 var port = process.env.PORT || "4000";
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+
 
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/index', indexRouter);
 app.use('/filedata', fileDataRouter);
@@ -124,9 +123,15 @@ if(process.env.NODE_ENV === 'production'){
       res.sendFile(path.resolve(__dirname,'..', 'amuse-ic', 'build', 'index.html'))
   );
 }else{
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'hbs');
+  app.use(express.static(path.join(__dirname, 'public')));
   app.get('/index',(req,res)=>{
       res.send('API is Running');
   });
+  app.get('/',(req,res)=>{
+    res.send('Ajatha pala');
+});
 }
 app.set('port', port);
 var server = http.createServer(app);

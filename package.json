@@ -9,7 +9,7 @@
     "install-client": "cd amuse-ic && npm install",
     "install-server": "cd backend && npm install",
     "heroku-postbuild": "npm run install-server && npm run install-client && npm run build",
-    "server": "nodemon backend/bin/www",
+    "server": "node backend/app",
     "client": "npm start --prefix amuse-ic",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "dev": "concurrently \"npm run server\" \"npm run client\""

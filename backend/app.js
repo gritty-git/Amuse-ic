@@ -10,7 +10,8 @@ var session = require('cookie-session');
 const flash = require('connect-flash');
 const msal = require('@azure/msal-node');
 require('dotenv').config();
-
+var debug = require('debug')('graph-tutorial:server');
+var http = require('http');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
@@ -84,7 +85,7 @@ app.use(function(req, res, next) {
   next();
 });
 // </SessionSnippet>
-
+var port = process.env.PORT || "4000";
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -94,7 +95,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', indexRouter);
 app.use('/filedata', fileDataRouter);
@@ -127,5 +128,7 @@ if(process.env.NODE_ENV === 'production'){
       res.send('API is Running');
   });
 }
+app.set('port', port);
+var server = http.createServer(app);
+server.listen(port);
 
-module.exports = app;

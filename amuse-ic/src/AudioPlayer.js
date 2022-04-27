@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 function AudioPlayer() {
   var [songList,getSongList] = useState(song_list);
   const [isLoading, setLoading] = useState(true);
+  const jsonData= require('./data.json'); 
   useEffect(() => {
     //console.log('Will now fetch song list');
     axios.get('/filedata')
@@ -38,7 +39,21 @@ function AudioPlayer() {
     <br></br>
     <a href="/auth/signin" className="btn btn-primary btn-block btn-lg">Login</a>
     <br></br>
+    <h5>To do before log-in</h5>
+    <li>Create a folder and rename it to "Music" inside your root folder of OneDrive.</li>
+    <li>Put the mp3 files inside this folder to which you want to listen to.</li>
+    <br></br>
     (If logged in then please wait for atleast 5 sec for the song to load!)
+    <br></br>
+    <br></br>
+    If you don't want to sign in and rather listen to my selected songs,
+    <br></br>
+    <button className="btn btn-primary" onClick={() => { 
+    getSongList(jsonData);
+    setLoading(false);
+    }}>
+      Click Here!
+    </button> 
     </div>;
     
   }

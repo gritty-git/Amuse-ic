@@ -36,7 +36,7 @@ router.get('/callback',
       scopes: process.env.OAUTH_SCOPES.split(','),
       redirectUri: process.env.OAUTH_REDIRECT_URI
     };
-
+    console.log(process.env.OAUTH_REDIRECT_URI);
     try {
       const response = await req.app.locals
         .msalClient.acquireTokenByCode(tokenRequest);

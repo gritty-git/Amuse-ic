@@ -36,7 +36,7 @@ function AudioPlayer() {
     <br></br>
     (If not logged in then Login here!)
     <br></br>
-    <a href="/index" className="btn btn-primary btn-block btn-lg">Login</a>
+    <a href="/auth/signin" className="btn btn-primary btn-block btn-lg">Login</a>
     <br></br>
     (If logged in then please wait for atleast 5 sec for the song to load!)
     </div>;

@@ -12,6 +12,7 @@ const msal = require('@azure/msal-node');
 require('dotenv').config();
 var debug = require('debug')('graph-tutorial:server');
 var http = require('http');
+const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
@@ -20,6 +21,9 @@ const fileDataRouter = require('./routes/filedata');
 const testRouter = require('./routes/testing');
 
 const app = express();
+app.use(express.json())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
 app.use(cors()) 
 // <MsalInitSnippet>
 // In-memory storage of logged-in users
@@ -85,16 +89,15 @@ app.use(function(req, res, next) {
   next();
 });
 // </SessionSnippet>
-var port = process.env.PORT || "4000";
+const port = process.env.PORT || '4000';
 // view engine setup
-
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'hbs');
 
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-
+app.use(cookieParser("My secret for Amusic App"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', indexRouter);
 app.use('/filedata', fileDataRouter);
@@ -103,9 +106,9 @@ app.use('/test', testRouter);
 app.use('/users', usersRouter);
 // app.use('/app', routesUrls)
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -123,17 +126,11 @@ if(process.env.NODE_ENV === 'production'){
       res.sendFile(path.resolve(__dirname,'..', 'amuse-ic', 'build', 'index.html'))
   );
 }else{
-  app.set('views', path.join(__dirname, 'views'));
-  app.set('view engine', 'hbs');
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.get('/index',(req,res)=>{
+  app.get('/',(req,res)=>{
       res.send('API is Running');
   });
-  app.get('/',(req,res)=>{
-    res.send('Ajatha pala');
-});
 }
-app.set('port', port);
-var server = http.createServer(app);
-server.listen(port);
 
+app.listen(port, function(){
+  console.log("Server running at 4000");
+})

@@ -62,7 +62,7 @@ router.get('/callback',
       });
     }
 
-    res.redirect('/index');
+    res.redirect('/');
   }
 );
 // </CallbackSnippet>

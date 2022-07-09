@@ -24,7 +24,7 @@ module.exports = {
     //data.value.map(dt => newdata.push({"tn":(dt.thumbnails.length==0)?[]:dt.thumbnails[0].large.url}))
     data.value.map(dt => newdata.push({"id": dt.id, "name":dt.description, "metadata" :dt.audio,"webContentLink" : dt['@microsoft.graph.downloadUrl'], "thumbnail":(dt.thumbnails.length==0)?[]:dt.thumbnails[0].large.url }));
     //console.log(newdata);
-    return data;
+    return newdata;
   },
   
 };

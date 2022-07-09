@@ -26,8 +26,8 @@ function Playlist(props) {
               <i className="fas fa-play"></i>
             </div>
             <div className="songmeta_playlist">
-              <span className="songname">{song.name}</span>
-              <span className="songauthors">{song.name}</span>
+              <span className="songname">{song.name || song.alt_name}</span>
+              <span className="songauthors">{song.name || song.alt_name}</span>
             </div>
             <div className="playlist_btns_group">
               <button className="fav_song playlist_btn">

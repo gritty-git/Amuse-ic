@@ -46,8 +46,10 @@ function AudioPlayer() {
     (If logged in then please wait for atleast 5 sec for the song to load!)
     <br></br>
     <br></br>
-    If you don't want to sign in and rather listen to my selected songs,
+    If you don't want to sign in and rather listen to my selected songs, use the following Microsoft credentials : 
     <br></br>
+    Email : soumyamusicdump@gmail.com<br/>
+    Password : <br/>
     <button className="btn btn-primary" onClick={() => { 
     getSongList(jsonData);
     setLoading(false);

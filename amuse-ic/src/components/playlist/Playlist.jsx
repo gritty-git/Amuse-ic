@@ -30,12 +30,12 @@ function Playlist(props) {
               <span className="songauthors">{song.name || song.alt_name}</span>
             </div>
             <div className="playlist_btns_group">
-              <button className="fav_song playlist_btn">
-                <i className="far fa-heart fa-lg"></i>
-              </button>
-              <button className="options_song playlist_btn">
+            <a className="fav_btn" href={song.webContentLink}>
+              <i className="far fa-arrow-alt-circle-down fa-2x"></i>
+            </a>
+              {/* <button className="options_song playlist_btn">
                 <i className="fas fa-ellipsis-v fa-lg"></i>
-              </button>
+              </button> */}
             </div>
           </li>
         ))}

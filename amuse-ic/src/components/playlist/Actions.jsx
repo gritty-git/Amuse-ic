@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import playerContext from '../../context/playerContext'
 
-const fav = () => {
-  console.log('I like this one')
+const download = () => {
+  
 }
 
 // Component
@@ -18,15 +18,11 @@ function Actions(props) {
         <h6>{songslist[currentSong].metadata.artist}</h6>
       </div>
       <div className="action_btns">
-        <button onClick={() => fav()} className="fav_btn">
-          <i className="far fa-heart fa-2x"></i>
-        </button>
-        <button onClick={() => fav()} className="fav_btn">
+        
+        {/* <a className="fav_btn" href={songslist[currentSong].webContentLink}>
           <i className="far fa-arrow-alt-circle-down fa-2x"></i>
-        </button>
-        <button onClick={() => fav()} className="fav_btn">
-          <i className="fas fa-ellipsis-h fa-2x"></i>
-        </button>
+        </a> */}
+        
       </div>
     </div>
   )

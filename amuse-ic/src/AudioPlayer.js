@@ -50,12 +50,12 @@ function AudioPlayer() {
     <br></br>
     Email : soumyamusicdump@gmail.com<br/>
     Password : musicdumpsoumya123$<br/>
-    <button className="btn btn-primary" onClick={() => { 
+    {/* <button className="btn btn-primary" onClick={() => { 
     getSongList(jsonData);
     setLoading(false);
     }}>
       Click Here!
-    </button> 
+    </button>  */}
     </div>;
     
   }

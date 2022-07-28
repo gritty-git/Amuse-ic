@@ -32,7 +32,8 @@ function AudioPlayer() {
   },[]);
   if(isLoading){
     console.log("loading");
-    return <div className="App">
+    return <div className="login-page">
+    <Header/>
     Loading...
     <br></br>
     (If not logged in then Login here!)

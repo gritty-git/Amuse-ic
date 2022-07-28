@@ -2,16 +2,22 @@
 * {
   box-sizing: border-box;
 }
-html{
-  min-width: 800px;
-}
+/* html{
+  
+} */
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
   display: flex;
   justify-content: center;
   height: 100vh;
-  background-color: #e3e3e3;
+  
+  background: url(./images/login-bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
   
 }
 button {
@@ -154,9 +160,9 @@ header h3 {
   background: white;
 }
 
-.playlist .header {
+/* .playlist .header {
   
-}
+} */
 
 .songContainer {
   cursor: pointer;
@@ -165,6 +171,10 @@ header h3 {
 
 .pltext {
   padding: 5px;
+}
+
+.login-page {
+  background-color: #dfdfdf;
 }
 
 .loi {

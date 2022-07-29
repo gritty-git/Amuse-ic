@@ -9,37 +9,45 @@ import axios from "axios";
 import './main.css'
 import './input.css'
 import 'bootstrap/dist/css/bootstrap.css';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 
 function AudioPlayer() {
   var [songList,getSongList] = useState(song_list);
-  const [isLoading, setLoading] = useState(true);
-  const jsonData= require('./data.json'); 
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [fetching, setFetching] = useState(false);
   useEffect(() => {
-    //console.log('Will now fetch song list');
+    console.log('Will now fetch song list');
+    setFetching(true);
     axios.get('/filedata')
     .then(res => {
+      console.log(res);
+      setFetching(false);
       if(Array.isArray(res.data)){
-        // console.log(res);
+        console.log(res);
         getSongList(res.data);
-        setLoading(false);
+        setLoggedIn(true);
       }else{
         console.log("login!");
       }
         
-    })
+    }).catch(err => {
+      console.log(err);
+      setFetching(false);
+    });
+    
   },[]);
-  if(isLoading){
-    console.log("loading");
+  if(!loggedIn){
+    console.log("logging in");
     return <div className="">
     <Header/>
     <div className='login-page'>
       Loading...
+      <ClipLoader loading={fetching} size={150} />
       <br></br>
       (If not logged in then Login here!)
-      <br></br>
-      <a href="/auth/signin" className="btn btn-primary btn-block btn-lg">Login</a>
+      
       <br></br>
       <h5>To do before log-in</h5>
       <li>Create a folder and rename it to "Music" inside your root folder of OneDrive.</li>
@@ -52,12 +60,7 @@ function AudioPlayer() {
       <br></br>
       Email : soumyamusicdump@gmail.com<br/>
       Password : musicdumpsoumya123$<br/>
-      {/* <button className="btn btn-primary" onClick={() => { 
-      getSongList(jsonData);
-      setLoading(false);
-      }}>
-        Click Here!
-      </button>  */}
+      
     </div>
     
     </div>;

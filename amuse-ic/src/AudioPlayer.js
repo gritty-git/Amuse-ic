@@ -9,7 +9,7 @@ import axios from "axios";
 import './main.css'
 import './input.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import ClipLoader from "react-spinners/ClipLoader";
+import PuffLoader from "react-spinners/PuffLoader";
 
 
 
@@ -18,35 +18,49 @@ function AudioPlayer() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [fetching, setFetching] = useState(false);
   useEffect(() => {
-    console.log('Will now fetch song list');
+    
     setFetching(true);
     axios.get('/filedata')
     .then(res => {
-      console.log(res);
+      
       setFetching(false);
       if(Array.isArray(res.data)){
         console.log(res);
         getSongList(res.data);
         setLoggedIn(true);
       }else{
-        console.log("login!");
+        
       }
         
     }).catch(err => {
-      console.log(err);
+      
       setFetching(false);
     });
     
   },[]);
   if(!loggedIn){
-    console.log("logging in");
+    if(fetching){
+      return( 
+        <div className="">
+          <Header/>
+          
+          <div style={ { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", backgroundColor:"rgba(223,223,223,0.8)", padding:"12px" }}>
+          <PuffLoader color="#0091e4" size={150}/>
+          <br/>
+          Retrieving user status....
+          </div>
+          
+        </div>
+      );
+    }
+    
     return <div className="">
     <Header/>
+    
     <div className='login-page'>
-      Loading...
-      <ClipLoader loading={fetching} size={150} />
+      
       <br></br>
-      (If not logged in then Login here!)
+      You are not logged in! Login by clicking on the button in header.
       
       <br></br>
       <h5>To do before log-in</h5>

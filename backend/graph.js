@@ -15,11 +15,13 @@ module.exports = {
     return user;
   },
   getFileDetails: async function(msalClient, userId) {
+    
     const client = getAuthenticatedClient(msalClient, userId);
-
+    
     const data = await client
       .api('/me/drive/root:/Music:/children?$expand=thumbnails&$top=500')
       .get();
+    
     const newdata = [];
     //data.value.map(dt => newdata.push({"tn":(dt.thumbnails.length==0)?[]:dt.thumbnails[0].large.url}))
     data.value.map(dt => newdata.push({"id": dt.id, "name":dt.description, "alt_name":dt.name, "metadata" :dt.audio,"webContentLink" : dt['@microsoft.graph.downloadUrl'], "thumbnail":(dt.thumbnails.length==0)?[]:dt.thumbnails[0].large.url }));

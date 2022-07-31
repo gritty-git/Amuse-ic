@@ -15,11 +15,12 @@ router.get('/',
       const user = req.app.locals.users[req.session.userId];
       try {
         // Get the events
+        
         const details = await graph.getFileDetails(
           req.app.locals.msalClient,
           req.session.userId,
           );
-
+        
         res.json(details);
       } catch (err) {
         res.send(JSON.stringify(err, Object.getOwnPropertyNames(err)));

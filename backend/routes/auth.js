@@ -88,7 +88,7 @@ router.get('/signout',
 
     // Destroy the user's session
     req.session.destroy(function (err) {
-      console.log(err);
+      console.log("came here to delete session");
       res.redirect('/');
     });
   }

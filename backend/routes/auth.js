@@ -88,7 +88,8 @@ router.get('/signout',
 
     // Destroy the user's session
     req.session.destroy(function (err) {
-      res.redirect('/index');
+      console.log(err);
+      res.redirect('/');
     });
   }
 );

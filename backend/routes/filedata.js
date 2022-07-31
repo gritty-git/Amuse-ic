@@ -20,7 +20,7 @@ router.get('/',
           req.app.locals.msalClient,
           req.session.userId,
           );
-        
+          details.push(req.app.locals.users[req.session.userId].displayName.length===0?req.app.locals.users[req.session.userId].email:req.app.locals.users[req.session.userId].displayName);
         res.json(details);
       } catch (err) {
         res.send(JSON.stringify(err, Object.getOwnPropertyNames(err)));

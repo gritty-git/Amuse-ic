@@ -7,7 +7,7 @@ function Login(props) {
     if(props.fetching){
         return( 
         <div className="">
-            <Header loggedIn={false}/>
+            <Header loggedIn={false} username={props.username}/>
             
             <div style={spinnerContainerStyle}>
             <PuffLoader color="#0091e4" size={150}/>

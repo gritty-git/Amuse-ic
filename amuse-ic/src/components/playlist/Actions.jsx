@@ -11,7 +11,7 @@ function Actions(props) {
   const songslist = props.songsList;
   return (
     <div className="actions">
-      <img src={songslist[currentSong].thumbnail} />
+      <img src={songslist[currentSong].thumbnail} style={{height:"50%"}} />
       <div className="album_meta">
         <span className="alb_label">{songslist[currentSong].metadata.album}'s</span>
         <h3>{songslist[currentSong].name}</h3>

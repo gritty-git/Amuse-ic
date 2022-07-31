@@ -7,12 +7,13 @@ import Controls from './../Controls'
 import PlayerState from './../../context/playerState';
 
 function PlayerInterface(props) {
+    console.log(props.username);
     return (
         props.songList.length===0 ? <div className="App">Please refresh the page!!</div> :
         <PlayerState songsList={props.songList}>
         <div className='main'>
             <div className='top'>
-            <Header loggedIn={true}/>
+            <Header loggedIn={true} username={props.username}/>
             <Actions songsList={props.songList}/>
             <Playlist songsList={props.songList}/>
             </div>

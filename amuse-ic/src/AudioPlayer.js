@@ -14,6 +14,7 @@ function AudioPlayer() {
   var [songList,getSongList] = useState(song_list);
   const [loggedIn, setLoggedIn] = useState(false);
   const [fetching, setFetching] = useState(false);
+  const [username, setUsername] = useState("User");
   useEffect(() => {
     setFetching(true);
     console.log("came here to fetch");
@@ -22,7 +23,9 @@ function AudioPlayer() {
       console.log(res);
       setFetching(false);
       if(Array.isArray(res.data)){
-        getSongList(res.data);
+        setUsername(prevValue => {return res.data[res.data.length-1]});
+        console.log(res.data[-1]);
+        getSongList(res.data.slice(0,-1));
         setLoggedIn(true);
       }else{
         
@@ -33,11 +36,11 @@ function AudioPlayer() {
     });
   },[]);
   if(!loggedIn){
-    return (<Login fetching={fetching}/>);
+    return (<Login fetching={fetching} username={username}/>);
   }
 
   return (
-    <PlayerInterface songList={songList}/>
+    <PlayerInterface songList={songList} username={username}/>
   );
 }
 

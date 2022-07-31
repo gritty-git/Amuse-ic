@@ -70,28 +70,30 @@ router.get('/callback',
 router.get('/signout',
   async function(req, res) {
     // Sign out
-    
     if (req.session.userId) {
       // Look up the user's account in the cache
       const accounts = await req.app.locals.msalClient
         .getTokenCache()
         .getAllAccounts();
 
-      const userAccount = accounts.find(a => a.homeAccountId === req.session.userId);
-      
+      const userAccount = await accounts.find(a => a.homeAccountId === req.session.userId);
+
       // Remove the account
       if (userAccount) {
         req.app.locals.msalClient
           .getTokenCache()
-          .removeAccount(userAccount);
+          .removeAccount(userAccount)
+          .then(() => {
+            res.redirect('/');            
+          })
+          .catch((err) => {
+            res.status(500).send({err});
+          });
       }
     }
-    console.log("came here to delete session outside");
+
     // Destroy the user's session
-    req.session.destroy(function (err) {
-      console.log("came here to delete session inside");
-      res.redirect('/');
-    });
+    req.session = null;
   }
 );
 

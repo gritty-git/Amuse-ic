@@ -70,6 +70,7 @@ router.get('/callback',
 router.get('/signout',
   async function(req, res) {
     // Sign out
+    
     if (req.session.userId) {
       // Look up the user's account in the cache
       const accounts = await req.app.locals.msalClient
@@ -77,7 +78,7 @@ router.get('/signout',
         .getAllAccounts();
 
       const userAccount = accounts.find(a => a.homeAccountId === req.session.userId);
-
+      
       // Remove the account
       if (userAccount) {
         req.app.locals.msalClient
@@ -85,10 +86,10 @@ router.get('/signout',
           .removeAccount(userAccount);
       }
     }
-
+    console.log("came here to delete session outside");
     // Destroy the user's session
     req.session.destroy(function (err) {
-      console.log("came here to delete session");
+      console.log("came here to delete session inside");
       res.redirect('/');
     });
   }

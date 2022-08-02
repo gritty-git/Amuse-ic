@@ -1,18 +1,41 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 // import {song_list} from '../../context/songs'
 import playerContext from '../../context/playerContext'
+import SearchIcon from "@material-ui/icons/Search";
+import CloseIcon from "@material-ui/icons/Close";
 
 function Playlist(props) {
   const { SetCurrent, currentSong } = useContext(playerContext)
   const songslist = props.songsList;
+  const [searchTerm, setSearchTerm] = useState("");
+  function handleChange(event){
+    const term = event.target.value;
+    setSearchTerm(term); 
+  }
   return (
     <div className="playlist no_drag">
-      {/* <div className="header">
-        <h4 className="pltext">Songs by artist</h4>
-      </div> */}
+      <div className="search">
+        <div className="searchInputs">
+          <input
+            type="text"
+            placeholder={"Search by song's name, album, artist, etc...."}
+            value={searchTerm}
+            onChange={handleChange}
+          />
+          <div className="searchIcon">
+            {searchTerm.length === 0 ? (
+              <SearchIcon />
+            ) : (
+              <CloseIcon id="clearBtn" onClick={() => {setSearchTerm("")}} />
+            )}
+          </div>
+        </div>
+      </div>
       <ul className="loi">
         {songslist.map((song, i) => (
-          <li
+          (searchTerm=="" || ((song.name || song.alt_name).toLowerCase().includes(searchTerm.toLowerCase())) || ((song.metadata.album || "").toLowerCase().includes(searchTerm.toLowerCase()))|| ((song.metadata.artist || "").toLowerCase().includes(searchTerm.toLowerCase())) )
+          ?
+          (<li
             className={'songContainer ' + (currentSong === i ? 'selected' : '')}
             key={i}
             onClick={() => {
@@ -33,11 +56,11 @@ function Playlist(props) {
             <a className="fav_btn" href={song.webContentLink}>
               <i className="far fa-arrow-alt-circle-down fa-2x"></i>
             </a>
-              {/* <button className="options_song playlist_btn">
-                <i className="fas fa-ellipsis-v fa-lg"></i>
-              </button> */}
+              
             </div>
-          </li>
+          </li>)
+          :
+          <div/>
         ))}
       </ul>
     </div>

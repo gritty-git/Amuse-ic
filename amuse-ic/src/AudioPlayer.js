@@ -17,14 +17,14 @@ function AudioPlayer() {
   const [username, setUsername] = useState("User");
   useEffect(() => {
     setFetching(true);
-    console.log("came here to fetch");
+    
     axios.get('/filedata')
     .then(res => {
-      console.log(res);
+      
       setFetching(false);
       if(Array.isArray(res.data)){
         setUsername(prevValue => {return res.data[res.data.length-1]});
-        console.log(res.data[-1]);
+        
         getSongList(res.data.slice(0,-1));
         setLoggedIn(true);
       }else{

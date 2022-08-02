@@ -341,6 +341,29 @@ display: flex;
     margin-left: 20px;
     flex: 1;
 }
+
+.searchInputs {
+  margin: 12px;
+  display: flex;
+}
+.search input {
+  background-color: white;
+  border: 0;
+  border-radius: 2px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  font-size: 18px;
+  padding: 15px;
+  height: 30px;
+  width: 100%;
+}
+.searchIcon {
+  
+  background-color: white;
+  display: grid;
+  place-items: center;
+}
+
 .songMeta{
   width: 25vw;
 }
@@ -352,6 +375,10 @@ display: flex;
 .songartistName{
   font-size: 0.8em;
 }
+#clearBtn {
+  cursor: pointer;
+}
+
 #prgbar {
   background: transparent;
   width: 100%;

@@ -12,19 +12,21 @@ const msal = require('@azure/msal-node');
 require('dotenv').config();
 var debug = require('debug')('graph-tutorial:server');
 var http = require('http');
+const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+
 const authRouter = require('./routes/auth');
 const fileDataRouter = require('./routes/filedata');
 // const routesUrls = require('./routes/routes')
-const testRouter = require('./routes/testing');
+const uploadRouter = require('./routes/upload');
 
 const app = express();
 app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
-app.use(cors()) 
+app.use(cors());
+app.use(fileUpload());
 // <MsalInitSnippet>
 // In-memory storage of logged-in users
 // For demo purposes only, production apps should store
@@ -102,9 +104,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/index', indexRouter);
 app.use('/filedata', fileDataRouter);
 app.use('/auth', authRouter);
-app.use('/test', testRouter);
-app.use('/users', usersRouter);
-// app.use('/app', routesUrls)
+app.use('/upload', uploadRouter);
+
+
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   next(createError(404));

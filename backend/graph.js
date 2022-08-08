@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+const fs = require("fs");
 
+const { OneDriveLargeFileUploadTask, StreamUpload, FileUpload } = require("@microsoft/microsoft-graph-client");
 var graph = require('@microsoft/microsoft-graph-client');
 require('isomorphic-fetch');
 
@@ -29,6 +31,17 @@ module.exports = {
     
 
     return newdata;
+  },
+  uploadFile: async function(msalClient, userId, mp3file) {
+    
+    const client = getAuthenticatedClient(msalClient, userId);
+    await upload(client,mp3file)
+    .then((uploadResult) => {
+      console.log("return at func UploadFile of graph.js");
+      return uploadResult;
+    })
+    .catch((error) => console.log(error));
+    
   },
   
 };
@@ -72,4 +85,45 @@ function getAuthenticatedClient(msalClient, userId) {
   });
 
   return client;
+}
+async function upload(client,mp3file) {
+	const fileName = mp3file.name;
+  console.log("At upload func of graph.js");
+	const progress = (range, extraCallbackParam) => {
+		// implement the progress callback here
+		console.log("uploading range: ", range);
+		console.log(extraCallbackParam);
+		return true;
+	};
+	const options = {
+    path: "/Documents",
+		fileName,
+		conflictBehavior: "rename",
+		rangeSize: 1024 * 1024,
+		
+	};
+  //console.log("start",fileObject,"finish");
+	//OR
+	// You can also use a FileUpload instance
+	//const file = fs.readFileSync();
+	//const fileObject = new FileUpload(file, fileName, totalsize);
+
+	//OR
+	// You can also create an object from a custom implementation of the FileObject interface
+  try {
+    
+    const fileObject = new FileUpload(mp3file.data, mp3file.name, mp3file.size);
+    
+    const task = await OneDriveLargeFileUploadTask.createTaskWithFileObject(client, fileObject, options);
+
+    const uploadResult = await task.upload();
+    console.log("got upload confirmation");
+    return uploadResult;
+    
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+	return null;
+	
 }

@@ -25,10 +25,7 @@ module.exports = {
       .get();
     
     const newdata = [];
-    //data.value.map(dt => newdata.push({"tn":(dt.thumbnails.length==0)?[]:dt.thumbnails[0].large.url}))
-    data.value.map(dt => newdata.push({"id": dt.id, "name":dt.description, "alt_name":dt.name, "metadata" :dt.audio,"webContentLink" : dt['@microsoft.graph.downloadUrl'], "thumbnail":(dt.thumbnails.length==0)?[]:dt.thumbnails[0].large.url }));
-    //console.log(newdata);
-    
+    data.value.map(dt => newdata.push({"id": dt.id, "name":dt.description, "alt_name":dt.name, "metadata" :dt.audio,"webContentLink" : dt['@microsoft.graph.downloadUrl'], "thumbnail":(dt.thumbnails.length==0)?[]:dt.thumbnails[0].large.url }));    
 
     return newdata;
   },
@@ -37,10 +34,11 @@ module.exports = {
     const client = getAuthenticatedClient(msalClient, userId);
     await upload(client,mp3file)
     .then((uploadResult) => {
-      console.log("return at func UploadFile of graph.js");
       return uploadResult;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      return error;
+    });
     
   },
   
@@ -88,28 +86,15 @@ function getAuthenticatedClient(msalClient, userId) {
 }
 async function upload(client,mp3file) {
 	const fileName = mp3file.name;
-  console.log("At upload func of graph.js");
-	const progress = (range, extraCallbackParam) => {
-		// implement the progress callback here
-		console.log("uploading range: ", range);
-		console.log(extraCallbackParam);
-		return true;
-	};
+	
 	const options = {
-    path: "/Documents",
+    path: "/Music",
 		fileName,
 		conflictBehavior: "rename",
 		rangeSize: 1024 * 1024,
 		
 	};
-  //console.log("start",fileObject,"finish");
-	//OR
-	// You can also use a FileUpload instance
-	//const file = fs.readFileSync();
-	//const fileObject = new FileUpload(file, fileName, totalsize);
 
-	//OR
-	// You can also create an object from a custom implementation of the FileObject interface
   try {
     
     const fileObject = new FileUpload(mp3file.data, mp3file.name, mp3file.size);
@@ -117,11 +102,10 @@ async function upload(client,mp3file) {
     const task = await OneDriveLargeFileUploadTask.createTaskWithFileObject(client, fileObject, options);
 
     const uploadResult = await task.upload();
-    console.log("got upload confirmation");
+    
     return uploadResult;
     
   } catch (error) {
-    console.log(error);
     return error;
   }
 	return null;

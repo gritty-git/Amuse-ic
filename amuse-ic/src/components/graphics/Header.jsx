@@ -36,7 +36,7 @@ function Header(props) {
           
         >
           
-          <button onClick={closeModal}>X</button>
+          <button className="btn btn-danger mb-2" onClick={closeModal}>X</button>
           <UploadView/>
         </Modal>
       </div>

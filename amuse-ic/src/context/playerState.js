@@ -14,16 +14,7 @@ import {
 } from './types'
 
 const PlayerState = (props) => {
-  // var [songList,getSongList] = useState(song_list);
-  // useEffect(() => {
-  //   console.log('Will now fetch song list');
-  //   axios.get('/app/getSongs')
-  //   .then(res => {
-  //       getSongList(res.data);
-  //       initialState.songslist = res.data;
-  //   })
-  // },[]);
-  // console.log(props.songsList);
+  
     var initialState = {
       currentSong: 0,
       songslist: props.songsList,

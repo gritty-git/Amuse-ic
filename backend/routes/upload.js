@@ -10,12 +10,10 @@ router.post('/',
     } else {
             
       try {
-        // Get the events
-        graph.uploadFile(req.app.locals.msalClient,req.session.userId, req.files.file).then((result) => {
-          console.log("return at post call router",result);
+        // Get the upload detail
+        graph.uploadFile(req.app.locals.msalClient,req.session.userId, req.files.file).then((result) => {          
           res.send(result);
         });
-        //await res.send(result);
         
       } catch (err) {
         res.send(JSON.stringify(err, Object.getOwnPropertyNames(err)));

@@ -1,6 +1,4 @@
 import React, { Fragment, useState } from 'react';
-// import Message from './Message';
-// import Progress from './Progress';
 import axios from 'axios';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,37 +7,43 @@ import 'react-toastify/dist/ReactToastify.css';
 const UploadView = () => {
   const notify = (msg) => toast.dark(msg);
   const [file, setFile] = useState('');
-  const [filename, setFilename] = useState('Choose File');
-  const [uploadedFile, setUploadedFile] = useState({});
-
+  const [filenames, setFilenames] = useState([]);
+  
   const onChange = e => {
-    setFile(e.target.files[0]);
-    setFilename(e.target.files[0].name);
+    
+    setFile(e.target.files);
+    
   };
 
   const onSubmit = async e => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      
-      const res = await axios.post('/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }        
-      });
-      
-      notify("Uploaded " + filename + " !!");
-      
-    } catch (err) {
-      if (err.response.status === 500) {
-        notify('There was a problem with the server');
-      } else {
-        notify(err.response.data.msg);
+    Object.keys(file).map(async (key,idx) => {
+      const formData = new FormData();
+      formData.append('file', file[key]);
+      try {
+        console.log("uploading "+file[key].name);
+        const res = await axios.post('/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }        
+        });
+        console.log("uploaded "+file[key].name);
+        notify("Uploaded " + file[key].name + " !!" + idx);
+        setFilenames(prevValue => {
+          return [...prevValue, file[key].name];
+        });
+      } catch (err) {
+        if (err.response.status === 500) {
+          notify('There was a problem with the server');
+        } else {
+          notify(err.response.data.msg);
+        }
+        
       }
-      
-    }
+    })
+    
+
+    
   };
 
   return (
@@ -48,34 +52,30 @@ const UploadView = () => {
       <ToastContainer/>
       
       <form onSubmit={onSubmit}>
-        <div className='custom-file mb-4'>
-          <input
-            type='file'
-            className='custom-file-input'
-            id='customFile'
-            onChange={onChange}
-          />
-          <label className='custom-file-label' htmlFor='customFile'>
-            {filename}
+        <div className='mb-4'>
+          <input type='file' multiple onChange={onChange}/>
+          <br/><br/>
+          <label>
+            {"To Upload : "}
+            <ul>
+              {Object.keys(file).filter((key) => {
+                return filenames.indexOf(file[key].name)===-1;
+              })
+              .map((key,idx) => {
+                return <li>{file[key].name}</li>
+              })}
+            </ul>
+            {"Uploaded : "}
+            <ul>
+              {Object.keys(filenames)
+              .map((key,idx) => {
+                return <li style={{"color":"green"}}>{filenames[key]}</li>
+              })}
+            </ul>
           </label>
         </div>
-
-        
-
-        <input
-          type='submit'
-          value='Upload'
-          className='btn btn-primary btn-block mt-4'
-        />
+        <input type='submit' value='Upload' className='btn btn-primary btn-block mt-4' />
       </form>
-      {uploadedFile ? (
-        <div className='row mt-5'>
-          <div className='col-md-6 m-auto'>
-            <h3 className='text-center'>{uploadedFile.fileName}</h3>
-            <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
-          </div>
-        </div>
-      ) : null}
     </Fragment>
   );
 };

@@ -1,5 +1,5 @@
 Click below to visit the website. <br/>
-**[Amuse-ic App](https://amuse-ic.herokuapp.com/)**
+**[Amuse-ic App](https://amuse-ic.herokuapp.com/)** <br/>
 <i>A React Music App which fetches songs from user's Onedrive storage.</i>
 * Developed a Music App, Amuse-ic, that plays mp3 files fetched from the OneDrive storage the user logs in to.
 * Utilised React, React-Bootstrap and React-Hooks for developing the Front-end.

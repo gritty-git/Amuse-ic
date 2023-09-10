@@ -13,9 +13,9 @@ function Actions(props) {
     <div className="actions">
       <img src={songslist[currentSong].thumbnail} style={{height:"50%"}} />
       <div className="album_meta">
-        <span className="alb_label">{songslist[currentSong].metadata.album}'s</span>
+        <span className="alb_label">{"data unavailable"}'s</span>
         <h3>{songslist[currentSong].name}</h3>
-        <h6>{songslist[currentSong].metadata.artist}</h6>
+        <h6>{"data unavailable"}</h6>
       </div>
       <div className="action_btns">
         
